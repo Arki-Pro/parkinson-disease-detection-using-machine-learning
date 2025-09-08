@@ -1,156 +1,133 @@
-/* Global */
+/* Global Styles */
 body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #f4f7fa;
+    background: linear-gradient(to right, #f7f7f7, #e0f7fa);
     color: #333;
     scroll-behavior: smooth;
 }
 
-nav {
-    position: sticky;
-    top: 0;
-    background: #ffffffee;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    z-index: 100;
-}
-nav ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    padding: 10px;
-    margin: 0;
-}
-nav ul li {
-    margin: 0 20px;
-}
-nav ul li a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 600;
-    transition: color 0.3s;
-}
-nav ul li a:hover {
-    color: #4a90e2;
-}
-
-/* Hero */
-.hero {
-    background: linear-gradient(to right, #4a90e2, #6fb1fc);
-    color: white;
+header {
     text-align: center;
-    padding: 100px 20px;
-}
-.hero h1 {
-    font-size: 2.8em;
-    margin-bottom: 20px;
-}
-.hero p {
-    font-size: 1.2em;
+    padding: 40px 20px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    color: white;
 }
 
-/* Cards */
-.cards-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 50px 20px;
-    gap: 20px;
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
 }
-.card {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    max-width: 400px;
-    flex: 1 1 300px;
-    transition: transform 0.3s;
+
+header .subtitle {
+    font-size: 1.2em;
+    margin-top: 10px;
 }
-.card:hover {
-    transform: translateY(-5px);
+
+/* Section Styles */
+section {
+    padding: 50px 20px;
+    max-width: 800px;
+    margin: auto;
 }
-.card h2 {
-    color: #4a90e2;
-    margin-bottom: 15px;
+
+section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0072ff;
 }
 
 /* Flowchart */
-.flowchart-section {
-    text-align: center;
-    margin: 50px 20px;
-}
 .flowchart {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     flex-wrap: wrap;
-    gap: 15px;
+    text-align: center;
     margin-top: 20px;
 }
-.step {
-    background: #e6f0fa;
-    padding: 20px 25px;
-    border-radius: 10px;
-    font-weight: 600;
-    min-width: 120px;
+
+.flow-step {
+    background: #e0f7fa;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    flex: 1 1 120px;
+    margin: 5px;
 }
+
 .arrow {
     font-size: 2em;
     align-self: center;
 }
 
-/* Form Section */
-.form-section {
-    max-width: 500px;
-    margin: 50px auto;
-    background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-.form-section h2 {
-    text-align: center;
-    color: #4a90e2;
-    margin-bottom: 25px;
-}
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-button {
-    width: 100%;
-    padding: 15px;
-    background: #4a90e2;
-    color: white;
-    border: none;
+/* Form Styles */
+#form-section {
+    background: #ffffffdd;
+    padding: 30px;
     border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #0072ff;
+    box-shadow: 0 0 8px rgba(0,114,255,0.3);
+}
+
+button {
+    padding: 12px 20px;
+    background: #0072ff;
+    color: white;
     font-size: 1em;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s;
+    width: 100%;
+    transition: 0.3s;
 }
+
 button:hover {
-    background: #357abd;
+    background: #005bbb;
 }
+
 #result {
     margin-top: 20px;
+    font-size: 1.3em;
+    font-weight: bold;
     text-align: center;
-    font-weight: 600;
-    font-size: 1.2em;
+}
+
+/* Disclaimer */
+#disclaimer {
+    text-align: center;
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 40px;
 }
 
 /* Footer */
 footer {
     text-align: center;
-    padding: 25px 10px;
-    background: #333;
+    padding: 20px;
+    background: #0072ff;
     color: white;
-}
-footer a {
-    color: #4a90e2;
-    text-decoration: none;
-}
-footer a:hover {
-    text-decoration: underline;
+    font-size: 0.9em;
 }
