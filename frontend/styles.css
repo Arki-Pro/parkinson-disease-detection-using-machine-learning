@@ -113,6 +113,12 @@ nav ul li a:hover {
     color: #4a90e2;
     margin-bottom: 25px;
 }
+.tooltip {
+    font-size: 0.8em;
+    color: #555;
+    display: block;
+    margin-top: 2px;
+}
 input {
     width: 100%;
     padding: 12px;
