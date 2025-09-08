@@ -1,47 +1,63 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parkinson's Disease Detection (Educational)</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parkinson's Disease Detection</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>🧠 Parkinson's Disease Detection (Demo)</h1>
-    <p class="disclaimer">⚠️ This is an educational project only, not medical software.</p>
-  </header>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About PD</a></li>
+            <li><a href="#flow">How It Works</a></li>
+            <li><a href="#form">Predict</a></li>
+        </ul>
+    </nav>
 
-  <section class="info">
-    <h2>What is Parkinson’s?</h2>
-    <p>Parkinson’s disease is a progressive disorder of the nervous system that affects movement.</p>
-  </section>
+    <section id="home" class="hero">
+        <h1>Parkinson's Disease Detection</h1>
+        <p>An educational tool to understand Parkinson’s Disease. <strong>Not for medical use.</strong></p>
+    </section>
 
-  <section class="how-it-works">
-    <h2>How This Works</h2>
-    <ul>
-      <li>We use the <a href="https://www.kaggle.com/datasets/vikasukani/parkinsons-disease-data-set" target="_blank">Kaggle dataset</a>.</li>
-      <li>The dataset trains a machine learning model.</li>
-      <li>You enter sample values below.</li>
-      <li>Backend API predicts whether PD features are present.</li>
-    </ul>
-  </section>
+    <section id="about" class="cards-section">
+        <div class="card">
+            <h2>About Parkinson's</h2>
+            <p>Parkinson's disease is a neurodegenerative disorder affecting movement and motor control. This tool uses features from a publicly available dataset to detect Parkinson-like patterns.</p>
+        </div>
+        <div class="card">
+            <h2>Disclaimer</h2>
+            <p>This tool is for educational purposes only. Predictions do not replace medical diagnosis or professional advice.</p>
+        </div>
+    </section>
 
-  <section class="form-section">
-    <h2>Try the Demo</h2>
-    <form id="patientDataForm">
-      <label for="MDVP:Fo(Hz)">Average Vocal Fundamental Frequency (Hz)</label>
-      <input type="number" id="MDVP:Fo(Hz)" required>
-      
-      <label for="MDVP:Fhi(Hz)">Max Vocal Fundamental Frequency (Hz)</label>
-      <input type="number" id="MDVP:Fhi(Hz)" required>
-      
-      <label for="MDVP:Flo(Hz)">Min Vocal Fundamental Frequency (Hz)</label>
-      <input type="number" id="MDVP:Flo(Hz)" required>
-      
-      <button type="submit">Predict</button>
-    </form>
-    <div id="result"></div>
+    <section id="flow" class="flowchart-section">
+        <h2>How It Works</h2>
+        <div class="flowchart">
+            <div class="step">1. Input Data</div>
+            <div class="arrow">➡️</div>
+            <div class="step">2. Backend ML Prediction</div>
+            <div class="arrow">➡️</div>
+            <div class="step">3. Display Result</div>
+        </div>
+    </section>
+
+    <section id="form" class="form-section">
+        <h2>Try Prediction</h2>
+        <form id="patientDataForm">
+            <input type="number" id="feature1" placeholder="Feature 1" required>
+            <input type="number" id="feature2" placeholder="Feature 2" required>
+            <input type="number" id="feature3" placeholder="Feature 3" required>
+            <button type="submit">Detect</button>
+        </form>
+        <div id="result"></div>
+    </section>
+
+    <footer>
+        <p>Dataset: <a href="https://www.kaggle.com/datasets/vikasukani/parkinsons-disease-data-set" target="_blank">Kaggle</a></p>
+    </footer>
   </section>
   <script type="text/javascript">
     (function (l) {
@@ -61,6 +77,6 @@
       }
     })(window.location);
   </script>
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
