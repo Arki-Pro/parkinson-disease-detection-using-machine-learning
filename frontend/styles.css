@@ -129,10 +129,12 @@ button {
     border-radius: 10px;
     font-size: 1em;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
 }
 button:hover {
     background: #357abd;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 #result {
     margin-top: 20px;
