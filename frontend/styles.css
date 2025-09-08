@@ -113,12 +113,6 @@ nav ul li a:hover {
     color: #4a90e2;
     margin-bottom: 25px;
 }
-.tooltip {
-    font-size: 0.8em;
-    color: #555;
-    display: block;
-    margin-top: 2px;
-}
 input {
     width: 100%;
     padding: 12px;
@@ -167,4 +161,32 @@ footer a {
 }
 footer a:hover {
     text-decoration: underline;
+}
+.tooltip {
+    cursor: pointer;
+    color: #007bff;
+    margin-left: 5px;
+    font-weight: bold;
+    position: relative;
+}
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    font-size: 0.85em;
+    z-index: 10;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
 }
