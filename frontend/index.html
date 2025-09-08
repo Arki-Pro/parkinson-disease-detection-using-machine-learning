@@ -46,12 +46,18 @@
 
     <section id="form" class="form-section">
         <h2>Try Prediction</h2>
-        <form id="patientDataForm">
-            <input type="number" id="feature1" placeholder="Feature 1" required>
-            <input type="number" id="feature2" placeholder="Feature 2" required>
-            <input type="number" id="feature3" placeholder="Feature 3" required>
-            <button type="submit">Detect</button>
-        </form>
+       <form id="patientDataForm">
+    <label for="feature1">MDVP:Fo(Hz) – Average vocal fundamental frequency</label>
+    <input type="number" id="feature1" placeholder="Enter value" required>
+
+    <label for="feature2">MDVP:Fhi(Hz) – Maximum vocal fundamental frequency</label>
+    <input type="number" id="feature2" placeholder="Enter value" required>
+
+    <label for="feature3">MDVP:Flo(Hz) – Minimum vocal fundamental frequency</label>
+    <input type="number" id="feature3" placeholder="Enter value" required>
+
+    <button type="submit">Detect</button>
+</form>
         <div id="result"></div>
     </section>
 
