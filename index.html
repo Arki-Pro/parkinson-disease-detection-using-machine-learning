@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parkinson's Disease Detection (Educational)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>🧠 Parkinson's Disease Detection (Demo)</h1>
+    <p class="disclaimer">⚠️ This is an educational project only, not medical software.</p>
+  </header>
+
+  <section class="info">
+    <h2>What is Parkinson’s?</h2>
+    <p>Parkinson’s disease is a progressive disorder of the nervous system that affects movement.</p>
+  </section>
+
+  <section class="how-it-works">
+    <h2>How This Works</h2>
+    <ul>
+      <li>We use the <a href="https://www.kaggle.com/datasets/vikasukani/parkinsons-disease-data-set" target="_blank">Kaggle dataset</a>.</li>
+      <li>The dataset trains a machine learning model.</li>
+      <li>You enter sample values below.</li>
+      <li>Backend API predicts whether PD features are present.</li>
+    </ul>
+  </section>
+
+  <section class="form-section">
+    <h2>Try the Demo</h2>
+    <form id="patientDataForm">
+      <label for="MDVP:Fo(Hz)">Average Vocal Fundamental Frequency (Hz)</label>
+      <input type="number" id="MDVP:Fo(Hz)" required>
+      
+      <label for="MDVP:Fhi(Hz)">Max Vocal Fundamental Frequency (Hz)</label>
+      <input type="number" id="MDVP:Fhi(Hz)" required>
+      
+      <label for="MDVP:Flo(Hz)">Min Vocal Fundamental Frequency (Hz)</label>
+      <input type="number" id="MDVP:Flo(Hz)" required>
+      
+      <button type="submit">Predict</button>
+    </form>
+    <div id="result"></div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
