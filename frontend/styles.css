@@ -1,9 +1,9 @@
 /* Global */
 body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #c9ffbf, #ffafbd);
     margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #f4f7fa;
-    color: #333;
+    padding: 20px;
     scroll-behavior: smooth;
 }
 
