@@ -1,12 +1,21 @@
 document.getElementById('patientDataForm').addEventListener('submit', async function(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const f1 = parseFloat(document.getElementById('feature1').value);
-    const f2 = parseFloat(document.getElementById('feature2').value);
-    const f3 = parseFloat(document.getElementById('feature3').value);
+  const feature1 = parseFloat(document.getElementById('feature1').value);
+  const feature2 = parseFloat(document.getElementById('feature2').value);
+  const feature3 = parseFloat(document.getElementById('feature3').value);
 
-    // Temporary mock prediction
-    const result = (f1 + f2 + f3) % 2 === 0 ? "Likely Parkinson's" : "Unlikely Parkinson's";
+  try {
+    const response = await fetch('', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ feature1, feature2, feature3 }),
+    });
 
-    document.getElementById('result').innerText = `Prediction: ${result}`;
-});
+    const result = await response.json();
+    document.getElementById('result').innerText = `Prediction: ${result.prediction}`;
+  } catch (error) {
+    document.getElementById('result').innerText = "Error: Could not connect to backend.";
+  }
