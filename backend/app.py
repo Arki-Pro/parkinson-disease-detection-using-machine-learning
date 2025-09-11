@@ -1,40 +1,47 @@
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+from flask import Flask, request, jsonify
 import joblib
+import numpy as np
 
-# ======== Load dataset ========
-# You can replace this with the real Parkinson’s dataset CSV
-# For now, I'll create a dummy dataset with random values
-def create_dummy_dataset():
-    np.random.seed(42)
-    size = 200
-    data = {
-        "fo": np.random.uniform(100, 300, size),
-        "fhi": np.random.uniform(200, 400, size),
-        "flo": np.random.uniform(80, 150, size),
-        "jitter": np.random.uniform(0.001, 0.05, size),
-        "shimmer": np.random.uniform(0.01, 0.1, size),
-        "hnr": np.random.uniform(10, 30, size),
-        "dfa": np.random.uniform(1.0, 1.5, size),
-        "status": np.random.choice([0, 1], size=size) # 0 = healthy, 1 = Parkinson’s
-    }
-    return pd.DataFrame(data)
+# Initialize Flask app
+app = Flask(__name__)
 
-df = create_dummy_dataset()
+# Load the trained ML model and scaler
+model = joblib.load("model.pkl") # Your trained classifier
+scaler = joblib.load("scaler.pkl") # StandardScaler or MinMaxScaler used during training
 
-# ======== Split features & target ========
-X = df[["fo", "fhi", "flo", "jitter", "shimmer", "hnr", "dfa"]]
-y = df["status"]
+@app.route("/")
+def home():
+    return "Backend is running!"
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+@app.route("/predict", methods=["POST"])
+def predict():
+    try:
+        data = request.get_json(force=True)
+        # Extract features in the correct order
+        features = [
+            data["fo"],
+            data["fhi"],
+            data["flo"],
+            data["jitter"],
+            data["shimmer"],
+            data["hnr"],
+            data["dfa"]
+        ]
 
-# ======== Train model ========
-model = RandomForestClassifier(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
+        # Convert to numpy array and reshape
+        x = np.array(features).reshape(1, -1)
 
-# ======== Save model ========
-joblib.dump(model, "model.pkl")
+        # Scale the input
+        x_scaled = scaler.transform(x)
 
-print("✅ Model trained and saved as model.pkl"
+        # Make prediction
+        pred = model.predict(x_scaled)[0]
+        result = int(pred) # Ensure JSON serializable
+
+        return jsonify({"prediction": result})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+if __name__ == "__main__":
+    app.run(debug=True)
