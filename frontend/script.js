@@ -1,21 +1,63 @@
-document.getElementById('patientDataForm').addEventListener('submit', async function(event) {
-  event.preventDefault();
+// Smooth scroll fix for browsers that ignore CSS behavior for anchor links on some setups
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    const href = a.getAttribute('href');
+    if(href.length>1){
+      e.preventDefault();
+      document.querySelector(href)?.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
+});
 
-  const feature1 = parseFloat(document.getElementById('feature1').value);
-  const feature2 = parseFloat(document.getElementById('feature2').value);
-  const feature3 = parseFloat(document.getElementById('feature3').value);
+// Demo filler values (reasonable ranges for the dataset)
+document.getElementById('fillDemo').addEventListener('click', ()=>{
+  const set = (id,val)=>document.getElementById(id).value = val;
+  set('fo', 145.5);
+  set('fhi', 160.2);
+  set('flo', 135.8);
+  set('jitter', 0.0051);
+  set('shimmer', 0.03);
+  set('hnr', 21.7);
+  set('dfa', 0.73);
+});
+
+// Predict handler
+document.getElementById('patientDataForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const q = id => parseFloat(document.getElementById(id).value);
+  const payload = {
+    fo: q('fo'),
+    fhi: q('fhi'),
+    flo: q('flo'),
+    jitter: q('jitter'),
+    shimmer: q('shimmer'),
+    hnr: q('hnr'),
+    dfa: q('dfa'),
+  };
+
+  const resultBox = document.getElementById('result');
+  resultBox.className = 'result'; // reset
+  resultBox.textContent = 'Running prediction...';
 
   try {
-    const response = await fetch('', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ feature1, feature2, feature3 }),
+    // Replace with your deployed backend URL
+    const resp = await fetch('https://your-backend-url/predict', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
     });
 
-    const result = await response.json();
-    document.getElementById('result').innerText = `Prediction: ${result.prediction}`;
-  } catch (error) {
-    document.getElementById('result').innerText = "Error: Could not connect to backend.";
+    if(!resp.ok){
+      const err = await resp.json().catch(()=>({error:'Server error'}));
+      resultBox.textContent = `Error: ${err.error || 'Unable to predict'}`;
+      return;
+    }
+
+    const data = await resp.json();
+    const label = data.prediction === 1 ? "Parkinson’s likely (model positive)" : "Parkinson’s unlikely (model negative)";
+    resultBox.textContent = `Prediction: ${label}`;
+    resultBox.classList.add(data.prediction === 1 ? 'bad' : 'ok');
+  } catch(err){
+    resultBox.textContent = 'Could not connect to backend.';
   }
+});
