@@ -41,7 +41,7 @@ document.getElementById('patientDataForm').addEventListener('submit', async (e)=
 
   try {
     // Replace with your deployed backend URL
-    const resp = await fetch('https://parkinson-disease-detection-using.onrender.com', {
+    const resp = await fetch('https://parkinson-disease-detection-using.onrender.com/predict', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify(payload)
