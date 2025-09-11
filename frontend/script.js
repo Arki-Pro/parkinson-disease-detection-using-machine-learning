@@ -1,17 +1,17 @@
-// Smooth scroll fix for browsers that ignore CSS behavior for anchor links on some setups
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click', e=>{
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
     const href = a.getAttribute('href');
-    if(href.length>1){
+    if (href.length > 1) {
       e.preventDefault();
-      document.querySelector(href)?.scrollIntoView({behavior:'smooth', block:'start'});
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
 });
 
-// Demo filler values (reasonable ranges for the dataset)
-document.getElementById('fillDemo').addEventListener('click', ()=>{
-  const set = (id,val)=>document.getElementById(id).value = val;
+// Demo filler values (reasonable ranges from Kaggle dataset)
+document.getElementById('fillDemo').addEventListener('click', () => {
+  const set = (id, val) => document.getElementById(id).value = val;
   set('fo', 145.5);
   set('fhi', 160.2);
   set('flo', 135.8);
@@ -22,42 +22,50 @@ document.getElementById('fillDemo').addEventListener('click', ()=>{
 });
 
 // Predict handler
-document.getElementById('patientDataForm').addEventListener('submit', async (e)=>{
+document.getElementById('patientDataForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const q = id => parseFloat(document.getElementById(id).value);
-  const payload = {
-    fo: q('fo'),
-    fhi: q('fhi'),
-    flo: q('flo'),
-    jitter: q('jitter'),
-    shimmer: q('shimmer'),
-    hnr: q('hnr'),
-    dfa: q('dfa'),
-  };
 
   const resultBox = document.getElementById('result');
-  resultBox.className = 'result'; // reset
+  resultBox.className = 'result'; // reset classes
   resultBox.textContent = 'Running prediction...';
 
   try {
-    // Replace with your deployed backend URL
-    const resp = await fetch('https://parkinson-disease-detection-using.onrender.com/predict', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+    // Collect input values
+    const payload = {
+      fo: parseFloat(document.getElementById('fo').value),
+      fhi: parseFloat(document.getElementById('fhi').value),
+      flo: parseFloat(document.getElementById('flo').value),
+      jitter: parseFloat(document.getElementById('jitter').value),
+      shimmer: parseFloat(document.getElementById('shimmer').value),
+      hnr: parseFloat(document.getElementById('hnr').value),
+      dfa: parseFloat(document.getElementById('dfa').value)
+    };
+
+    // Replace below URL with your Render backend URL
+    const BACKEND_URL = 'https://parkinson-disease-detection-using.onrender.com/predict';
+
+    const resp = await fetch(BACKEND_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
 
-    if(!resp.ok){
-      const err = await resp.json().catch(()=>({error:'Server error'}));
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({ error: 'Server error' }));
       resultBox.textContent = `Error: ${err.error || 'Unable to predict'}`;
       return;
     }
 
     const data = await resp.json();
-    const label = data.prediction === 1 ? "Parkinson’s likely (model positive)" : "Parkinson’s unlikely (model negative)";
+    const label = data.prediction === 1
+      ? "Parkinson’s likely (model positive)"
+      : "Parkinson’s unlikely (model negative)";
+
     resultBox.textContent = `Prediction: ${label}`;
     resultBox.classList.add(data.prediction === 1 ? 'bad' : 'ok');
-  } catch(err){
+
+  } catch (err) {
     resultBox.textContent = 'Could not connect to backend.';
+    console.error(err);
   }
 });
