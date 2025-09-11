@@ -1,47 +1,42 @@
 from flask import Flask, request, jsonify
-import joblib
 import numpy as np
+import joblib
+import os
 
-# Initialize Flask app
 app = Flask(__name__)
 
-# Load the trained ML model and scaler
-model = joblib.load("model.pkl") # Your trained classifier
-scaler = joblib.load("scaler.pkl") # StandardScaler or MinMaxScaler used during training
+# Load pre-trained model and scaler
+MODEL_PATH = os.path.join(os.path.dirname(__file__), 'model.pkl')
+SCALER_PATH = os.path.join(os.path.dirname(__file__), 'scaler.pkl')
 
-@app.route("/")
-def home():
-    return "Backend is running!"
+model = joblib.load(MODEL_PATH)
+scaler = joblib.load(SCALER_PATH)
 
-@app.route("/predict", methods=["POST"])
+@app.route('/predict', methods=['POST'])
 def predict():
+    data = request.get_json()
     try:
-        data = request.get_json(force=True)
-        # Extract features in the correct order
+        # Extract features in correct order
         features = [
-            data["fo"],
-            data["fhi"],
-            data["flo"],
-            data["jitter"],
-            data["shimmer"],
-            data["hnr"],
-            data["dfa"]
+            data['fo'], 
+            data['fhi'], 
+            data['flo'], 
+            data['jitter'], 
+            data['shimmer'], 
+            data['hnr'], 
+            data['dfa']
         ]
+        features_array = np.array(features).reshape(1, -1)
 
-        # Convert to numpy array and reshape
-        x = np.array(features).reshape(1, -1)
+        # Scale features
+        features_scaled = scaler.transform(features_array)
 
-        # Scale the input
-        x_scaled = scaler.transform(x)
+        # Predict
+        prediction = model.predict(features_scaled)[0]
 
-        # Make prediction
-        pred = model.predict(x_scaled)[0]
-        result = int(pred) # Ensure JSON serializable
-
-        return jsonify({"prediction": result})
-
+        return jsonify({'prediction': int(prediction)})
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({'error': str(e)}), 400
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
