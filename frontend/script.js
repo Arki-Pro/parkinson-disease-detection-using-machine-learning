@@ -21,7 +21,7 @@ document.getElementById('fillDemo').addEventListener('click', () => {
   set('dfa', 0.73);
 });
 
-fetch('YOUR_RENDER_BACKEND_URL/predict', {
+fetch('https://parkinson-disease-detection-using.onrender.com/predict', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
