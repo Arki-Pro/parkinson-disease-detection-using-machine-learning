@@ -12,13 +12,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 // Demo filler values (reasonable ranges from Kaggle dataset)
 document.getElementById('fillDemo').addEventListener('click', () => {
   const set = (id, val) => document.getElementById(id).value = val;
-  set('fo', 119.992);
-  set('fhi', 157.302);
-  set('flo', 113.819);
-  set('jitter', 0.00784);
-  set('shimmer', 0.0432);
-  set('hnr', 21.03);
-  set('dfa', 0.703);
+  set('fo', 145.5);
+  set('fhi', 160.2);
+  set('flo', 135.8);
+  set('jitter', 0.0051);
+  set('shimmer', 0.03);
+  set('hnr', 21.7);
+  set('dfa', 0.73);
 });
 
 // Predict handler
