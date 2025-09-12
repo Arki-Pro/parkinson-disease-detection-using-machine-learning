@@ -30,32 +30,7 @@ def predict():
         ]
         features_array = np.array(features).reshape(1, -1)
 
-        # Typical healthy ranges (approximate)
-healthy_ranges = {
-    'fo': (120, 250), # Hz
-    'fhi': (150, 300), # Hz
-    'flo': (90, 200), # Hz
-    'jitter': (0, 0.5), # %
-    'shimmer': (0, 0.05),    
-    'hnr': (20, 30), # dB
-    'dfa': (0.9, 1.05)
-}
-
-# Compare input features to healthy ranges
-feature_status = {}
-for i, key in enumerate(['fo','fhi','flo','jitter','shimmer','hnr','dfa']):
-    val = features[i]
-    low, high = healthy_ranges[key]
-    if val < low:
-        feature_status[key] = 'Low'
-    elif val > high:
-        feature_status[key] = 'High'
-    else:
-        feature_status[key] = 'Normal'
-
-# Include in response
-return jsonify({'prediction': int(prediction), 'feature_status': feature_status})
-
+    
         # Scale features
         features_scaled = scaler.transform(features_array)
 
