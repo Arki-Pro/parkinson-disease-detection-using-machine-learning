@@ -21,6 +21,35 @@ document.getElementById('fillDemo').addEventListener('click', () => {
   set('dfa', 0.73);
 });
 
+fetch('YOUR_RENDER_BACKEND_URL/predict', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        fo: foValue,
+        fhi: fhiValue,
+        flo: floValue,
+        jitter: jitterValue,
+        shimmer: shimmerValue,
+        hnr: hnrValue,
+        dfa: dfaValue
+    })
+})
+.then(res => res.json())
+.then(data => {
+    // Show model prediction
+    document.getElementById('prediction').innerText = data.prediction ? 'Parkinson\'s' : 'Healthy';
+    
+    // Show feature-wise status
+    let statusDiv = document.getElementById('feature-status');
+    statusDiv.innerHTML = ''; // clear previous
+    for (let [key, value] of Object.entries(data.feature_status)) {
+        let p = document.createElement('p');
+        p.innerText = `${key.toUpperCase()}: ${value}`;
+        statusDiv.appendChild(p);
+    }
+})
+.catch(err => console.error(err));
+
 // Predict handler
 document.getElementById('patientDataForm').addEventListener('submit', async (e) => {
   e.preventDefault();
