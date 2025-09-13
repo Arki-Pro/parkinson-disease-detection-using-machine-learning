@@ -107,5 +107,37 @@ document.getElementById('patientDataForm').addEventListener('submit', async (e) 
     resultBox.textContent = 'Could not connect to backend.';
     console.error(err);
   }
+  // ------------------------
+// Tooltip helper (no HTML edit required)
+// Paste at end of script.js
+// ------------------------
+(function () {
+  const nodes = document.querySelectorAll('.info[title]');
+  nodes.forEach(el => {
+    // copy title -> data-tooltip and remove title to prevent native browser tooltip
+    const tt = el.getAttribute('title');
+    if (tt && !el.hasAttribute('data-tooltip')) {
+      el.setAttribute('data-tooltip', tt);
+      el.removeAttribute('title');
+    }
+    // make it keyboard-focusable for accessibility (only if not already)
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+
+    // for touch devices: tap to toggle tooltip (adds/removes class tooltip-open)
+    el.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      // toggle visible state
+      el.classList.toggle('tooltip-open');
+      // hide after 3s automatically
+      if (el.classList.contains('tooltip-open')) {
+        setTimeout(()=> el.classList.remove('tooltip-open'), 3000);
+      }
+    });
+  });
+
+  // close any open tooltip if user taps/clicks elsewhere
+  document.addEventListener('click', ()=> {
+    document.querySelectorAll('.info.tooltip-open').forEach(e => e.classList.remove('tooltip-open'));
+  });
 });
 
