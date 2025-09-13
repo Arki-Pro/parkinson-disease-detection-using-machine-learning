@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About Parkinson’s — Unveiling Parkinson’s</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+</head>
+<body>
+  <!-- NAVBAR (keeps look consistent). Update links if you serve statically vs via Flask. -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Unveiling <span>Parkinson’s</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html" aria-current="page">About</a>
+        <a href="index.html#pipeline">How It Works</a>
+        <a href="index.html#try">Try the Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO / HEADER -->
+  <header class="hero" style="min-height:40vh; padding:48px 18px;">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="hero-content" data-aos="fade-up">
+      <h1>About Parkinson’s Disease</h1>
+      <p class="hero-sub">
+        A short, readable primer for judges and users — concise, accurate, and educational. This page is for information only.
+      </p>
+    </div>
+  </header>
+
+  <!-- CORE CONTENT -->
+  <main class="section">
+    <div class="container two-col">
+      <!-- Text column -->
+      <div class="col" data-aos="fade-right">
+        <h2>What is Parkinson’s disease?</h2>
+        <p>
+          Parkinson’s disease (PD) is a progressive neurodegenerative condition that mainly affects movement and motor control.
+          Symptoms include tremor, bradykinesia (slowness of movement), rigidity, and postural instability. Non-motor signs can include
+          sleep disturbances, smell loss, and changes in speech and voice.
+        </p>
+
+        <h3>Why voice?</h3>
+        <p class="muted">
+          Alterations in speech and voice are among early, measurable signs in many people with PD. Acoustic markers like fundamental frequency,
+          jitter (pitch microvariability), shimmer (amplitude microvariability), and harmonic-to-noise ratio can change before obvious motor symptoms.
+        </p>
+
+        <h3>What this demo does</h3>
+        <ul>
+          <li>Uses a small public dataset (Kaggle) of recorded voice-derived features.</li>
+          <li>Shows a simple machine learning model (Decision Tree) trained for educational demonstration.</li>
+          <li>Returns an educational prediction and a brief feature-wise explanation — not a medical diagnosis.</li>
+        </ul>
+
+        <h3>Limitations & ethics</h3>
+        <p class="muted">
+          This web demo is <strong>not a medical device</strong>. It uses a limited dataset and a simple model. It cannot replace clinical evaluation
+          by neurologists. Inputs are numeric features, not raw audio, and no personal data is stored by default.
+        </p>
+      </div>
+
+      <!-- Visual / card column -->
+      <div class="col art-box" data-aos="fade-left" aria-hidden="false">
+        <div style="padding:24px;">
+          <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+            <div style="width:56px; height:56px; border-radius:12px; display:grid; place-items:center; background:linear-gradient(135deg,var(--primary),var(--accent));">
+              <i class="fa-solid fa-brain" style="font-size:22px"></i>
+            </div>
+            <div>
+              <strong>Educational demo</strong>
+              <div class="muted" style="font-size:0.95rem">Not clinical — for learning and research only</div>
+            </div>
+          </div>
+
+          <div style="margin-top:8px;">
+            <h4 style="margin:6px 0;">Key voice features we use</h4>
+            <ul style="line-height:1.5; margin-left:14px;">
+              <li><strong>Fo / Fhi / Flo</strong> — fundamental frequency (pitch averages & range)</li>
+              <li><strong>Jitter</strong> — pitch instability (cycle-to-cycle)</li>
+              <li><strong>Shimmer</strong> — amplitude instability</li>
+              <li><strong>HNR</strong> — harmonic-to-noise (clarity)</li>
+              <li><strong>DFA</strong> — complexity / long-range correlation</li>
+            </ul>
+          </div>
+
+          <div style="margin-top:12px;">
+            <h4 style="margin:6px 0;">References & data</h4>
+            <p class="muted" style="font-size:.95rem; margin:6px 0;">
+              Source dataset: <a href="https://www.kaggle.com/datasets/vikasukani/parkinsons-disease-data-set" target="_blank" rel="noopener" style="color:var(--accent)">Kaggle — Parkinson’s voice</a><br>
+              Example implementation: <a href="https://github.com/Arki-Pro/parkinson-disease-detection-using-machine-learning" target="_blank" rel="noopener" style="color:var(--accent)">GitHub repo</a>
+            </p>
+          </div>
+
+          <div style="margin-top:16px;">
+            <a class="btn btn-primary" href="index.html#try"><i class="fa-solid fa-vial-circle-check"></i> Try the Demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- SIMPLE FAQ / HOW-TO for judges -->
+  <section class="section alt">
+    <div class="container">
+      <h2 data-aos="fade-up">Quick QA for judges</h2>
+      <div class="faq" data-aos="fade-up" data-aos-delay="80">
+        <div class="faq-item">
+          <h3><i class="fa-solid fa-gear"></i> How does the demo work?</h3>
+          <p class="muted">Frontend posts 7 numeric features to a Flask API (/predict). Backend scales the numbers and uses a saved model to predict. The UI shows prediction + a feature-level note.</p>
+        </div>
+        <div class="faq-item">
+          <h3><i class="fa-solid fa-bolt"></i> Is this accurate?</h3>
+          <p class="muted">Not for clinical use. Small dataset and a simple model — suitable for learning and prototype demonstrations only.</p>
+        </div>
+        <div class="faq-item">
+          <h3><i class="fa-solid fa-lock"></i> Privacy</h3>
+          <p class="muted">No audio or personal data stored by default. Inputs are numeric features only.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2025 Unveiling Parkinson’s — Team NeuroMechanics</div>
+      <div class="links">
+        <a href="https://www.kaggle.com/datasets/vikasukani/parkinsons-disease-data-set" target="_blank" rel="noopener">Kaggle dataset</a>
+        <a href="https://github.com/Arki-Pro/parkinson-disease-detection-using-machine-learning" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>AOS.init({ duration: 700, once: true });</script>
+</body>
+</html>
