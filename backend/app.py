@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import joblib
 import numpy as np
@@ -33,6 +33,10 @@ healthy_ranges = {
 @app.route("/", methods=["GET"])
 def index():
     return jsonify({"status": "backend live"})
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 @app.route("/predict", methods=["POST"])
