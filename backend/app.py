@@ -38,6 +38,10 @@ def index():
 def about():
     return render_template('about.html')
 
+@app.route("/vision")
+def vision():
+    return render_template("vision.html")
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
