@@ -1,54 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Futuristic Vision</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Futuristic Vision — NeuroMechanics</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
 </head>
 <body>
-  <header class="header">
-    <h1>Our Futuristic Vision</h1>
-    <nav>
-      <a href="index.html">← Back to Home</a>
-    </nav>
+  <!-- NAVBAR (same look as main site) -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Unveiling <span>Parkinson’s</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="index.html#pipeline">How It Works</a>
+        <a href="index.html#try">Try</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO (smaller, consistent) -->
+  <header class="hero" style="min-height:34vh; padding:48px 18px;">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="hero-content" data-aos="fade-up">
+      <h1>Futuristic Vision — Telemonitoring & SaaS for Neuro Research</h1>
+      <p class="hero-sub">From an educational Parkinson’s demo to a cloud platform for continuous monitoring, longitudinal research, and collaborative neuroscience tools.</p>
+    </div>
   </header>
 
-  <main class="vision-container">
-    <section>
-      <h2>Parkinson’s Telemonitoring</h2>
-      <p>
-        Our project aspires to evolve from early-stage detection to continuous 
-        <strong>telemonitoring of Parkinson’s patients</strong>. This means tracking 
-        subtle changes in voice, motor skills, and cognition remotely — helping 
-        clinicians adapt treatment in real-time.
-      </p>
-    </section>
+  <!-- MAIN -->
+  <main class="section">
+    <div class="container two-col">
+      <!-- left column: text -->
+      <div class="col" data-aos="fade-right">
+        <div class="card" style="padding:22px;">
+          <h2>1. Parkinson’s Telemonitoring</h2>
+          <p class="muted">Remote, frequent evaluation of voice and remote sensor biomarkers to track disease progression and therapy response. Think weekly voice checks, automated trend reports, and clinician alerts on significant change.</p>
 
-    <section>
-      <h2>Becoming a SaaS Platform</h2>
-      <p>
-        We envision building a <strong>Software-as-a-Service (SaaS)</strong> platform 
-        dedicated to <em>neuro research</em>. Researchers worldwide will be able to 
-        plug in data, run analytics, and explore biomarkers for 
-        Parkinson’s, Alzheimer’s, epilepsy, and other neurological disorders — 
-        all on one secure, scalable cloud-based platform.
-      </p>
-    </section>
+          <h3 style="margin-top:12px">2. Multi-modal data</h3>
+          <p class="muted">Beyond voice: integrate wearable motor metrics, touchscreen tapping tests, and patient-reported scales. All fused into time-series models for early warning and research-grade phenotyping.</p>
 
-    <section>
-      <h2>Why This Matters</h2>
-      <p>
-        Current diagnostics are slow and fragmented. Our long-term vision is to 
-        <strong>unify clinical neuroscience tools</strong>, accelerate discovery, 
-        and improve patient quality of life through accessible, AI-driven insights.
-      </p>
-    </section>
+          <h3 style="margin-top:12px">3. SaaS for researchers</h3>
+          <p class="muted">Secure cloud platform where labs upload data, run validated pipelines, and share reproducible experiments. Multi-tenant, role-based access, and exportable datasets for clinical studies.</p>
+
+          <div class="about-divider"></div>
+
+          <h4>Ethics & privacy</h4>
+          <p class="muted">HIPAA-style protections, opt-in consent, and anonymized research exports. The demo is educational; production requires full regulatory and privacy compliance.</p>
+        </div>
+      </div>
+
+      <!-- right column: highlight / roadmap -->
+      <div class="col" data-aos="fade-left">
+        <div class="art-box" style="padding:18px;">
+          <div style="display:flex; gap:12px; align-items:center; margin-bottom:14px;">
+            <div class="flow-icon" style="width:48px;height:48px;border-radius:12px;display:grid;place-items:center;">
+              <i class="fa-solid fa-satellite-dish" style="font-size:20px"></i>
+            </div>
+            <div>
+              <strong style="font-size:1.05rem">Roadmap (next 3 years)</strong>
+              <div class="muted" style="font-size:0.95rem">Prototype → Pilot studies → SaaS MVP → Clinical partnerships</div>
+            </div>
+          </div>
+
+          <ul style="margin:8px 0 0 18px; line-height:1.45;" class="muted">
+            <li><strong>Year 1</strong> — robust telemetric data collection + regulatory checklist.</li>
+            <li><strong>Year 2</strong> — federated analytics, cohort dashboards, and clinician UI.</li>
+            <li><strong>Year 3</strong> — SaaS platform, institutional pilots, and academic integrations.</li>
+          </ul>
+
+          <div style="margin-top:16px;">
+            <a class="btn btn-primary" href="index.html#try"><i class="fa-solid fa-vial-circle-check"></i> Demo the Model</a>
+            <a class="btn btn-ghost" href="mailto:contact@neuromechanics.example" style="margin-left:8px"><i class="fa-solid fa-envelope"></i> Contact</a>
+          </div>
+
+        </div>
+
+        <!-- compact FAQ / bullets -->
+        <div style="margin-top:16px" class="card">
+          <h4 style="margin:6px 0;">Why this matters</h4>
+          <p class="muted" style="font-size:0.95rem">Faster research cycles, remote monitoring to reduce clinic burden, and standardized pipelines for reproducible neuroscience.</p>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Parkinson’s Voice Project</p>
-    <p><a href="index.html">Back to Home</a></p>
+  <!-- FOOTER with link to Vision (if shown elsewhere keep consistent) -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2025 Unveiling Parkinson’s — Team NeuroMechanics</div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="vision.html" aria-current="page">Futuristic Vision</a>
+      </div>
+    </div>
   </footer>
+
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>AOS.init({ duration: 700, once: true });</script>
 </body>
 </html>
