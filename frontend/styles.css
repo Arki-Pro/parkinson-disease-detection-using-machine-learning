@@ -317,4 +317,32 @@ footer a:hover {
   margin-top: 1.5rem;
   color: #222;
 }
+/* ===== Vision page small tweaks (append to end of styles.css) ===== */
 
+.vision-container { padding: 8px 0; }
+
+/* slightly brighter card for roadmap */
+.art-box .flow-icon { box-shadow: none !important; }
+.art-box ul { margin-top: 8px; color: var(--muted); }
+
+/* small responsive spacing fix */
+@media (max-width: 900px) {
+  .two-col { gap: 18px; }
+  .art-box { min-height: auto; }
+}
+
+/* footer link highlight for current page */
+.footer .links a[aria-current="page"] {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* email CTA style */
+.btn-ghost[mailto] { display:inline-flex; align-items:center; }
+
+/* keep hero-sub tighter on vision page */
+.hero .hero-sub { max-width: 840px; margin: 8px auto 18px; color: var(--muted); }
+
+/* small polish for list bullets */
+.art-box ul li { margin: 8px 0; }
