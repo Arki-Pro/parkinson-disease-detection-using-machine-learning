@@ -107,4 +107,4 @@ document.getElementById('patientDataForm').addEventListener('submit', async (e) 
     resultBox.textContent = 'Could not connect to backend.';
     console.error(err);
   }
- 
+});
