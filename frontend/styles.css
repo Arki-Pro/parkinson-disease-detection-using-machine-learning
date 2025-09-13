@@ -141,4 +141,79 @@ body{
 .footer-inner{display:flex; justify-content:space-between; align-items:center}
 .footer .links a{color:var(--muted); text-decoration:none; margin-left:14px}
 .footer .links a:hover{color:#fff}
+.info {
+  position: relative;              /* anchor for pseudo elements */
+  cursor: help;
+  display: inline-block;
+  line-height: 1;                  /* avoid height jump */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The tooltip bubble (hidden by default) */
+.info::after {
+  content: attr(data-tooltip);     /* populated by JS from title */
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);       /* appears above the icon */
+  transform: translateX(-50%) translateY(6px);
+  background: rgba(19, 20, 34, 0.98);
+  color: var(--muted);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  box-shadow: 0 8px 22px rgba(3,6,20,0.6);
+  border: 1px solid rgba(255,255,255,0.04);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  z-index: 120;
+}
+
+/* small arrow */
+.info::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 4px);
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(19,20,34,0.98) transparent transparent transparent;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+  z-index: 121;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.35));
+}
+
+/* Show tooltip on hover / keyboard focus */
+.info:hover::after,
+.info:focus::after,
+.info.tooltip-open::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.info:hover::before,
+.info:focus::before,
+.info.tooltip-open::before {
+  opacity: 1;
+}
+
+/* Make icons keyboard-focusable display nicely */
+.info:focus {
+  outline: none;
+  box-shadow: 0 0 0 5px rgba(39, 92, 255, 0.08);
+  border-radius: 6px;
+}
+
+/* Small screens: wrap long tooltips */
+@media (max-width: 520px) {
+  .info::after {
+    left: 50%;
+    white-space: normal;
+    max-width: 70vw;
+    padding: 10px 12px;
+    text-align: center;
+  }
+}
 
