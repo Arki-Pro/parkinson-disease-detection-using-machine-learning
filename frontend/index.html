@@ -1,113 +1,232 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Neurological Voice Assessment</title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unveiling Parkinson’s — Educational ML Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- AOS (scroll animations) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
 </head>
 <body>
-  <!-- NAV -->
+  <!-- NAVBAR -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="/index.html" class="logo">Neuro<span>Mechanics</span></a>
+      <a href="#home" class="logo">Unveiling <span>Parkinson’s</span></a>
       <div class="nav-links">
-        <a href="#parkinson">Parkinson Demo</a>
-        <a href="#dementiaOptional">Cognitive Assessment</a>
-        <a href="/dementia.html">Dementia Quiz</a>
+        <a href="about.html">About</a>
+        <a href="dementia.html">Dementia</a>
+        <a href="#pipeline">How It Works</a>
+        <a href="#try">Try It</a>
+        <a href="#disclaimer">Disclaimer</a>
       </div>
     </div>
   </nav>
 
-  <main class="section narrow">
-    <!-- Parkinson Voice Biomarkers -->
-    <section id="parkinson" class="card" style="padding:20px;">
-      <h2>Voice Biomarker Assessment (Parkinson's Detection)</h2>
-      <p class="muted">Fill all fields below to get Parkinson’s prediction. Optional cognitive questions follow.</p>
+  <!-- HERO -->
+  <header id="home" class="hero">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="hero-content" data-aos="fade-up">
+      <h1>AI-assisted Parkinson’s Detection</h1>
+      <p class="hero-sub">
+        Educational demo using voice biomarkers and machine learning. Built for learning, not diagnosis.
+      </p>
+      <div class="hero-cta">
+        <a href="#try" class="btn btn-primary"><i class="fa-solid fa-vial-circle-check"></i> Try the Demo</a>
+        <a href="#pipeline" class="btn btn-ghost"><i class="fa-solid fa-diagram-project"></i> See the Pipeline</a>
+      </div>
+    </div>
+  </header>
 
-      <form id="patientDataForm" autocomplete="off">
-        <div class="form-group">
-          <label for="fo">MDVP:Fo (Hz)</label>
-          <input id="fo" name="fo" type="number" step="any" required>
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container two-col">
+      <div class="col" data-aos="fade-right">
+        <h2>What is Parkinson’s disease?</h2>
+        <p>
+          Parkinson’s disease is a progressive neurodegenerative disorder affecting movement and speech. Early changes in voice stability and clarity can be quantified through acoustic features such as fundamental frequency, jitter, shimmer, and noise ratios.
+        </p>
+        <p class="muted">
+          In this demo we explore how such voice features from a public dataset can be analyzed with machine learning to produce an educational prediction.
+        </p>
+      </div>
+      <div class="col art-box" data-aos="fade-left" aria-hidden="true">
+        <div class="art-circle"></div>
+        <div class="art-chip">
+          <i class="fa-solid fa-brain"></i>
         </div>
-        <div class="form-group">
-          <label for="fhi">MDVP:Fhi (Hz)</label>
-          <input id="fhi" name="fhi" type="number" step="any" required>
+        <div class="art-wave">
+          <i class="fa-solid fa-wave-square"></i>
         </div>
-        <div class="form-group">
-          <label for="flo">MDVP:Flo (Hz)</label>
-          <input id="flo" name="flo" type="number" step="any" required>
-        </div>
-        <div class="form-group">
-          <label for="jitter">Jitter (%)</label>
-          <input id="jitter" name="jitter" type="number" step="any" required>
-        </div>
-        <div class="form-group">
-          <label for="shimmer">Shimmer</label>
-          <input id="shimmer" name="shimmer" type="number" step="any" required>
-        </div>
-        <div class="form-group">
-          <label for="hnr">HNR</label>
-          <input id="hnr" name="hnr" type="number" step="any" required>
-        </div>
-        <div class="form-group">
-          <label for="dfa">DFA</label>
-          <input id="dfa" name="dfa" type="number" step="any" required>
-        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Submit Parkinson Assessment</button>
-          <button type="reset" class="btn btn-ghost">Reset</button>
-          <button type="button" class="btn btn-secondary" id="fillDemo">Fill Demo Values</button>
-        </div>
+  <!-- PIPELINE -->
+  <section id="pipeline" class="section alt">
+    <div class="container">
+      <h2 data-aos="fade-up">How the model works</h2>
+      <p class="center muted" data-aos="fade-up" data-aos-delay="50">
+        Public Kaggle dataset → feature engineering → model training → Flask API → browser UI
+      </p>
 
-        <div id="result" class="result hide" style="margin-top:12px;"></div>
-      </form>
-    </section>
+      <div class="flow" data-aos="fade-up" data-aos-delay="100">
+        <div class="flow-card">
+          <div class="flow-icon"><i class="fa-solid fa-database"></i></div>
+          <h3>Dataset</h3>
+          <p>Parkinson’s voice dataset from Kaggle with 20+ acoustic features and labels (status).</p>
+        </div>
+        <div class="flow-arrow"><i class="fa-solid fa-angles-right"></i></div>
 
-    <!-- Optional Dementia-related Cognitive Questions -->
-    <section id="dementiaOptional" class="card" style="padding:20px; margin-top:24px;">
-      <h2>Optional Cognitive & Language Assessment</h2>
-      <p class="muted">For research purposes only. Not used in Parkinson’s prediction.</p>
+        <div class="flow-card">
+          <div class="flow-icon"><i class="fa-solid fa-sliders"></i></div>
+          <h3>Features</h3>
+          <p>Pitch (Fo, Fhi, Flo), jitter, shimmer, noise ratios (NHR/HNR), DFA, etc.</p>
+        </div>
+        <div class="flow-arrow"><i class="fa-solid fa-angles-right"></i></div>
 
-      <form id="cognitiveForm" autocomplete="off">
-        <div class="form-group">
-          <label for="cq1">1. Repeat these words: Apple, Table, Penny</label>
-          <input id="cq1" name="cq1" type="text" placeholder="Type words separated by commas">
+        <div class="flow-card">
+          <div class="flow-icon"><i class="fa-solid fa-robot"></i></div>
+          <h3>ML Model</h3>
+          <p>Trained with scikit-learn. Saved as <code>model.pkl</code> and served via Flask.</p>
         </div>
-        <div class="form-group">
-          <label for="cq2">2. Count backwards from 20 to 1</label>
-          <input id="cq2" name="cq2" type="text" placeholder="20,19,18,...">
-        </div>
-        <div class="form-group">
-          <label for="cq3">3. Spell the word "WORLD" backwards</label>
-          <input id="cq3" name="cq3" type="text" placeholder="DLROW">
-        </div>
-        <div class="form-group">
-          <label for="cq4">4. Name 3 animals</label>
-          <input id="cq4" name="cq4" type="text" placeholder="dog, cat, lion">
-        </div>
+        <div class="flow-arrow"><i class="fa-solid fa-angles-right"></i></div>
 
-        <div class="form-actions">
-          <button type="button" class="btn btn-primary" id="cogSubmit">Submit Optional Assessment</button>
-          <button type="reset" class="btn btn-ghost">Reset</button>
+        <div class="flow-card">
+          <div class="flow-icon"><i class="fa-solid fa-network-wired"></i></div>
+          <h3>API</h3>
+          <p>POST <code>/predict</code> endpoint returns JSON with predicted class.</p>
         </div>
-        <div id="cogResult" class="result hide" style="margin-top:12px;"></div>
-      </form>
-    </section>
-  </main>
+        <div class="flow-arrow"><i class="fa-solid fa-angles-right"></i></div>
 
-  <footer class="footer" style="margin-top:40px;">
+        <div class="flow-card">
+          <div class="flow-icon"><i class="fa-solid fa-display"></i></div>
+          <h3>Frontend</h3>
+          <p>Interactive form with tooltips, results panel, and neat visuals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRY IT -->
+  <section id="try" class="section">
+    <div class="container narrow">
+      <h2 data-aos="fade-up">Try it yourself</h2>
+      <p class="center muted" data-aos="fade-up" data-aos-delay="50">
+        Enter seven voice features. These are common acoustic markers studied in Parkinson’s research.
+      </p>
+
+      <div class="card" data-aos="fade-up" data-aos-delay="100">
+        <form id="patientDataForm" class="grid">
+          <!-- Fo -->
+          <div class="form-group">
+            <label for="fo">
+              <i class="fa-solid fa-wave-square info" title="MDVP:Fo(Hz) — average vocal fundamental frequency; pitch baseline."></i>
+              MDVP:Fo (Hz)
+            </label>
+            <input type="number" id="fo" inputmode="decimal" step="0.001" required>
+          </div>
+          <!-- Fhi -->
+          <div class="form-group">
+            <label for="fhi">
+              <i class="fa-solid fa-arrow-up info" title="MDVP:Fhi(Hz) — maximum fundamental frequency; pitch range ceiling."></i>
+              MDVP:Fhi (Hz)
+            </label>
+            <input type="number" id="fhi" inputmode="decimal" step="0.001" required>
+          </div>
+          <!-- Flo -->
+          <div class="form-group">
+            <label for="flo">
+              <i class="fa-solid fa-arrow-down info" title="MDVP:Flo(Hz) — minimum fundamental frequency; pitch range floor."></i>
+              MDVP:Flo (Hz)
+            </label>
+            <input type="number" id="flo" inputmode="decimal" step="0.001" required>
+          </div>
+          <!-- Jitter -->
+          <div class="form-group">
+            <label for="jitter">
+              <i class="fa-solid fa-microphone-lines info" title="Jitter(%) — cycle-to-cycle pitch variability; higher values indicate instability."></i>
+              Jitter (%)
+            </label>
+            <input type="number" id="jitter" inputmode="decimal" step="0.00001" required>
+          </div>
+          <!-- Shimmer -->
+          <div class="form-group">
+            <label for="shimmer">
+              <i class="fa-solid fa-volume-high info" title="Shimmer — cycle-to-cycle amplitude variability (loudness)."></i>
+              Shimmer
+            </label>
+            <input type="number" id="shimmer" inputmode="decimal" step="0.0001" required>
+          </div>
+          <!-- HNR -->
+          <div class="form-group">
+            <label for="hnr">
+              <i class="fa-solid fa-signal info" title="HNR — harmonic-to-noise ratio; lower values suggest more vocal noise."></i>
+              HNR
+            </label>
+            <input type="number" id="hnr" inputmode="decimal" step="0.001" required>
+          </div>
+          <!-- DFA -->
+          <div class="form-group">
+            <label for="dfa">
+              <i class="fa-solid fa-brain info" title="DFA — detrended fluctuation analysis; reflects signal complexity."></i>
+              DFA
+            </label>
+            <input type="number" id="dfa" inputmode="decimal" step="0.0001" required>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass-chart"></i> Predict</button>
+            <button type="button" id="fillDemo" class="btn btn-ghost"><i class="fa-solid fa-wand-magic-sparkles"></i> Fill demo values</button>
+          </div>
+        </form>
+
+        <div id="result" class="result hide" aria-live="polite"></div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER / FAQ -->
+  <section id="disclaimer" class="section alt">
+    <div class="container">
+      <h2 data-aos="fade-up">Important</h2>
+      <div class="faq" data-aos="fade-up" data-aos-delay="100">
+        <div class="faq-item">
+          <h3><i class="fa-solid fa-triangle-exclamation"></i> Educational use only</h3>
+          <p>This demo is not a medical device. It uses a small public dataset and a simple ML model to illustrate concepts.</p>
+        </div>
+        <div class="faq-item">
+          <h3><i class="fa-solid fa-notes-medical"></i> Why voice features?</h3>
+          <p>Early PD can alter phonation stability. Acoustic features like jitter, shimmer, and HNR capture subtle dysphonia patterns.</p>
+        </div>
+        <div class="faq-item">
+          <h3><i class="fa-solid fa-shield-halved"></i> Privacy</h3>
+          <p>No personal data is stored. Inputs are numeric feature values, not audio recordings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
     <div class="container footer-inner">
-      <div>© 2025 NeuroMechanics</div>
+      <div>© 2025 Unveiling Parkinson’s — Team NeuroMechanics</div>
+    <p><a href="vision.html">Our Futuristic Vision</a></p>
       <div class="links">
-        <a href="https://www.kaggle.com/datasets/vikasukani/parkinsons-disease-data-set" target="_blank">Kaggle dataset</a>
-        <a href="https://github.com/Arki-Pro/parkinson-disease-detection-using-machine-learning" target="_blank">GitHub</a>
+        <a href="https://www.kaggle.com/datasets/vikasukani/parkinsons-disease-data-set" target="_blank" rel="noopener">Kaggle dataset</a>
+        <a href="https://github.com/Arki-Pro/parkinson-disease-detection-using-machine-learning" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </footer>
 
   <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>AOS.init({ duration: 700, once: true });</script>
 </body>
 </html>
