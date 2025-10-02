@@ -1,0 +1,49 @@
+<section id="dementia-quiz" class="section alt">
+  <div class="container narrow">
+    <h2 data-aos="fade-up">Early Dementia Screening Quiz</h2>
+    <p class="center muted" data-aos="fade-up" data-aos-delay="50">
+      Educational interactive quiz to assess memory and attention.
+    </p>
+
+    <div class="card" data-aos="fade-up" data-aos-delay="100">
+      <form id="dementiaQuizForm">
+        <!-- Question 1 -->
+        <div class="form-group">
+          <label>1. What is today’s date? (DD/MM/YYYY)</label>
+          <input type="text" id="q1" required placeholder="e.g., 02/10/2025">
+        </div>
+
+        <!-- Question 2 -->
+        <div class="form-group">
+          <label>2. Repeat these three words: Apple, Table, Penny</label>
+          <input type="text" id="q2" required placeholder="Enter all 3 words separated by commas">
+        </div>
+
+        <!-- Question 3 -->
+        <div class="form-group">
+          <label>3. Count backwards from 20 to 1</label>
+          <input type="text" id="q3" required placeholder="Type numbers separated by commas">
+        </div>
+
+        <!-- Question 4 -->
+        <div class="form-group">
+          <label>4. Spell the word 'WORLD' backwards</label>
+          <input type="text" id="q4" required placeholder="e.g., DLROW">
+        </div>
+
+        <!-- Question 5 -->
+        <div class="form-group">
+          <label>5. Name 3 animals you can think of in 30 seconds</label>
+          <input type="text" id="q5" required placeholder="e.g., Cat, Dog, Lion">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-brain"></i> Submit Quiz</button>
+          <button type="reset" class="btn btn-ghost"><i class="fa-solid fa-eraser"></i> Reset</button>
+        </div>
+      </form>
+
+      <div id="quizResult" class="result hide" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
