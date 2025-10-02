@@ -67,6 +67,25 @@
             <button type="submit" class="btn btn-primary">Submit Quiz</button>
             <button type="reset" class="btn btn-ghost" id="dementiaReset">Reset</button>
           </div>
+<div class="card" style="margin-top:20px; padding:20px;">
+  <h3>Trail Making Test (Connect the Dots)</h3>
+  <p>Click numbers in order from 1 to 8 as quickly as you can.</p>
+  <canvas id="trailCanvas" width="300" height="300" style="border:1px solid #ccc;"></canvas>
+  <div id="trailResult" style="margin-top:10px;"></div>
+</div>
+
+<div class="card" style="margin-top:20px; padding:20px;">
+  <h3>Pattern Copy Test</h3>
+  <p>Click the squares to match the pattern below.</p>
+  <div id="patternOriginal" style="display:flex; gap:4px; margin-bottom:8px;">
+    <div class="pattern-square" style="width:30px; height:30px; background:#333;"></div>
+    <div class="pattern-square" style="width:30px; height:30px; background:#ccc;"></div>
+    <div class="pattern-square" style="width:30px; height:30px; background:#333;"></div>
+  </div>
+  <div id="patternUser" style="display:flex; gap:4px;"></div>
+  <button id="patternReset" class="btn btn-secondary" style="margin-top:8px;">Reset</button>
+  <div id="patternResult" style="margin-top:10px;"></div>
+</div>
         </form>
 
         <div id="dementiaResult" class="result hide" aria-live="polite" style="margin-top:14px;"></div>
@@ -90,22 +109,3 @@
   <script>AOS.init({ duration: 700, once: true });</script>
 </body>
 </html>
-<div class="card" style="margin-top:20px; padding:20px;">
-  <h3>Trail Making Test (Connect the Dots)</h3>
-  <p>Click numbers in order from 1 to 8 as quickly as you can.</p>
-  <canvas id="trailCanvas" width="300" height="300" style="border:1px solid #ccc;"></canvas>
-  <div id="trailResult" style="margin-top:10px;"></div>
-</div>
-
-<div class="card" style="margin-top:20px; padding:20px;">
-  <h3>Pattern Copy Test</h3>
-  <p>Click the squares to match the pattern below.</p>
-  <div id="patternOriginal" style="display:flex; gap:4px; margin-bottom:8px;">
-    <div class="pattern-square" style="width:30px; height:30px; background:#333;"></div>
-    <div class="pattern-square" style="width:30px; height:30px; background:#ccc;"></div>
-    <div class="pattern-square" style="width:30px; height:30px; background:#333;"></div>
-  </div>
-  <div id="patternUser" style="display:flex; gap:4px;"></div>
-  <button id="patternReset" class="btn btn-secondary" style="margin-top:8px;">Reset</button>
-  <div id="patternResult" style="margin-top:10px;"></div>
-</div>
