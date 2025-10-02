@@ -1,101 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI-assisted Dementia Early Detection — Educational Demo</title>
-  <link rel="stylesheet" href="styles.css" />
-  <!-- Google Fonts -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI-assisted Dementia — Demo</title>
+
+  <!-- keep the same styles/fonts you used on index -->
+  <link rel="stylesheet" href="/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <!-- Font Awesome (icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <!-- AOS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
 </head>
 <body>
-  <!-- NAVBAR -->
+  <!-- NAV (same as main) -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="logo">Unveiling <span>Parkinson’s</span></a>
+      <a href="/index.html" class="logo">Unveiling <span>Parkinson’s</span></a>
       <div class="nav-links">
-        <a href="index.html#about">About</a>
-        <a href="index.html#pipeline">How It Works</a>
-        <a href="index.html#try">Parkinson Demo</a>
-        <a href="#dementia-quiz">Dementia Quiz</a>
+        <a href="/index.html#about">About</a>
+        <a href="/index.html#pipeline">How It Works</a>
+        <a href="/index.html#try">Parkinson Demo</a>
+        <a href="/dementia.html">Dementia Quiz</a>
       </div>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="blob blob1"></div>
-    <div class="blob blob2"></div>
-    <div class="hero-content" data-aos="fade-up">
-      <h1>AI-assisted Dementia Screening</h1>
-      <p class="hero-sub">
-        Educational interactive quiz to explore early cognitive changes in dementia.
-      </p>
-    </div>
-  </header>
+  <main class="section narrow" style="padding-top:48px;">
+    <div class="container" data-aos="fade-up">
+      <h1>AI-assisted Dementia Screening — Educational Quiz</h1>
+      <p class="muted">Quick cognitive screening demo for educational purposes only.</p>
 
-  <!-- DEMENTIA QUIZ -->
-  <section id="dementia-quiz" class="section alt">
-    <div class="container narrow">
-      <h2 data-aos="fade-up">Early Dementia Screening Quiz</h2>
-      <p class="center muted" data-aos="fade-up" data-aos-delay="50">
-        Educational interactive quiz to assess memory, attention, and executive function.
-      </p>
-
-      <div class="card" data-aos="fade-up" data-aos-delay="100">
-        <form id="dementiaQuizForm">
-          <div class="form-group">
-            <label>1. What is today’s date? (DD/MM/YYYY)</label>
-            <input type="text" id="q1" required placeholder="e.g., 02/10/2025">
+      <!-- Quiz form (IDs must match script.js expectations) -->
+      <div class="card" style="margin-top:18px; padding:20px;">
+        <form id="dementiaQuizForm" autocomplete="off">
+          <div class="form-group" style="grid-column:1/-1">
+            <label for="q1">1. What is today's date? (DD/MM/YYYY)</label>
+            <input id="q1" name="q1" type="text" placeholder="DD/MM/YYYY" required />
           </div>
 
           <div class="form-group">
-            <label>2. Repeat these three words: Apple, Table, Penny</label>
-            <input type="text" id="q2" required placeholder="Enter all 3 words separated by commas">
+            <label for="q2">2. Repeat these words (type): Apple, Table, Penny</label>
+            <input id="q2" name="q2" type="text" placeholder="Type the three words separated by commas" required />
           </div>
 
           <div class="form-group">
-            <label>3. Count backwards from 20 to 1</label>
-            <input type="text" id="q3" required placeholder="Type numbers separated by commas">
+            <label for="q3">3. Count backwards from 20 to 1 (comma separated)</label>
+            <input id="q3" name="q3" type="text" placeholder="20,19,18,...,1" required />
           </div>
 
           <div class="form-group">
-            <label>4. Spell the word 'WORLD' backwards</label>
-            <input type="text" id="q4" required placeholder="e.g., DLROW">
+            <label for="q4">4. Spell the word "WORLD" backwards</label>
+            <input id="q4" name="q4" type="text" placeholder="e.g. DLROW" required />
           </div>
 
           <div class="form-group">
-            <label>5. Name 3 animals you can think of in 30 seconds</label>
-            <input type="text" id="q5" required placeholder="e.g., Cat, Dog, Lion">
+            <label for="q5">5. Name 3 animals you can think of (comma separated)</label>
+            <input id="q5" name="q5" type="text" placeholder="dog, cat, lion" required />
           </div>
 
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-brain"></i> Submit Quiz</button>
-            <button type="reset" class="btn btn-ghost"><i class="fa-solid fa-eraser"></i> Reset</button>
+          <div class="form-actions" style="grid-column:1/-1; justify-content:flex-end;">
+            <button type="submit" class="btn btn-primary">Submit Quiz</button>
+            <button type="reset" class="btn btn-ghost" id="resetQuiz">Reset</button>
           </div>
         </form>
 
-        <div id="quizResult" class="result hide" aria-live="polite"></div>
+        <div id="quizResult" class="result hide" aria-live="polite" style="margin-top:14px;"></div>
       </div>
     </div>
-  </section>
+  </main>
 
-  <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer" style="margin-top:40px;">
     <div class="container footer-inner">
       <div>© 2025 Unveiling Parkinson’s — Team NeuroMechanics</div>
       <div class="links">
-        <a href="https://www.kaggle.com/datasets/vikasukani/parkinsons-disease-data-set" target="_blank" rel="noopener">Kaggle PD dataset</a>
+        <a href="https://www.kaggle.com/datasets/vikasukani/parkinsons-disease-data-set" target="_blank" rel="noopener">Kaggle dataset</a>
         <a href="https://github.com/Arki-Pro/parkinson-disease-detection-using-machine-learning" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- IMPORTANT: script.js must be reachable at this path on the server -->
+  <script src="/script.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>AOS.init({ duration: 700, once: true });</script>
 </body>
