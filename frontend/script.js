@@ -108,47 +108,87 @@ document.getElementById('patientDataForm').addEventListener('submit', async (e) 
     console.error(err);
   }
 });
-// Dementia Quiz Logic
-const dementiaForm = document.getElementById('dementiaQuizForm');
-if (dementiaForm) {
-  dementiaForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const resultBox = document.getElementById('quizResult');
-    resultBox.className = 'result';
-    resultBox.textContent = '';
+// dementia-quiz.js  — drop this file in your frontend and include it before </body>
+document.addEventListener('DOMContentLoaded', () => {
+  // IDs expected in HTML
+  const FORM_ID = 'dementiaQuizForm';
+  const RESULT_ID = 'dementiaResult';
+  const RESET_ID = 'dementiaReset';
 
+  const form = document.getElementById(FORM_ID);
+  const resultBox = document.getElementById(RESULT_ID);
+
+  if (!form) {
+    console.error(`Dementia quiz JS: form with id="${FORM_ID}" not found.`);
+    return;
+  }
+  if (!resultBox) {
+    console.error(`Dementia quiz JS: result container with id="${RESULT_ID}" not found.`);
+    return;
+  }
+
+  // Example questions count: adjust if your HTML has more/less
+  // The script reads answers named q1, q2, q3... (radio or select or number)
+  const QUESTION_COUNT = 5;
+
+  // score rules (example): each "positive" answer gives 1 point
+  // If you use radio answers labeled "0" or "1", this will work.
+  function computeScore(formData) {
     let score = 0;
+    for (let i = 1; i <= QUESTION_COUNT; i++) {
+      const key = 'q' + i;
+      // If not present, skip (but ideally all present)
+      if (!formData.has(key)) continue;
+      const val = formData.get(key);
+      // Accept numeric strings: "0", "1" etc.
+      const num = parseFloat(val);
+      if (!isNaN(num)) {
+        score += num;
+      } else {
+        // handle text answers: treat 'yes' as 1
+        if (String(val).toLowerCase().startsWith('y')) score += 1;
+      }
+    }
+    return score;
+  }
 
-    // Q1: Date
-    const today = new Date();
-    const q1 = document.getElementById('q1').value.trim();
-    const todayStr = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
-    if (q1 === todayStr) score += 1;
+  function interpretScore(score) {
+    // Example thresholds — tweak for your quiz
+    const maxScore = QUESTION_COUNT; // if every q gives 1
+    const pct = Math.round((score / maxScore) * 100);
+    if (pct >= 70) return { label: 'High risk (possible dementia indicators)', pct };
+    if (pct >= 40) return { label: 'Moderate risk — follow-up suggested', pct };
+    return { label: 'Low risk (unlikely)', pct };
+  }
 
-    // Q2: Repeat words
-    const q2 = document.getElementById('q2').value.toLowerCase().replace(/\s+/g,'');
-    if (q2.includes('apple') && q2.includes('table') && q2.includes('penny')) score += 1;
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const fd = new FormData(form);
+    const score = computeScore(fd);
+    const info = interpretScore(score);
 
-    // Q3: Count backwards
-    const q3 = document.getElementById('q3').value.replace(/\s+/g,'').split(',');
-    if (q3.length === 20 && q3[0] == 20 && q3[19] == 1) score += 1;
-
-    // Q4: Spell WORLD backwards
-    const q4 = document.getElementById('q4').value.trim().toUpperCase();
-    if (q4 === 'DLROW') score += 1;
-
-    // Q5: Name 3 animals
-    const q5 = document.getElementById('q5').value.toLowerCase().split(',');
-    if (q5.filter(a => a.trim() !== '').length >= 3) score += 1;
-
-    // Result
-    let message = '';
-    if (score === 5) message = "Excellent! Cognitive performance looks normal.";
-    else if (score >= 3) message = "Moderate performance. Consider regular cognitive exercises.";
-    else message = "Low score. Educational alert: May need further cognitive assessment.";
-
-    resultBox.innerHTML = `<strong>Score: ${score}/5</strong><br>${message}`;
+    // Build a friendly result block (won't change your CSS layout)
+    resultBox.innerHTML = `
+      <div style="padding:12px;">
+        <strong>Quiz result:</strong>
+        <div style="margin-top:8px">${info.label} — <strong>${info.pct}%</strong></div>
+        <div style="margin-top:10px; font-size:.9em; color:#cfcfcf;">
+          This is an educational screening quiz only — not a diagnosis. Recommend clinical evaluation for any concerning result.
+        </div>
+      </div>
+    `;
     resultBox.classList.remove('hide');
-    resultBox.classList.add(score >= 3 ? 'ok' : 'bad');
+    // optionally scroll into view
+    resultBox.scrollIntoView({behavior:'smooth'});
   });
-}
+
+  // Optional reset button (if present)
+  const resetBtn = document.getElementById(RESET_ID);
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      form.reset();
+      resultBox.innerHTML = '';
+      resultBox.classList.add('hide');
+    });
+  }
+});
