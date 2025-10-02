@@ -192,3 +192,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+document.addEventListener('DOMContentLoaded', () => {
+  // ...existing dementia quiz code...
+
+  // Demo fill button for dementia quiz
+  const demoBtn = document.getElementById('fillDemoDementia');
+  const form = document.getElementById('dementiaQuizForm');
+  if (demoBtn && form) {
+    demoBtn.addEventListener('click', () => {
+      form.q1.value = "01/10/2025"; // today's date, as demo
+      form.q2.value = "Apple, Table, Penny";
+      form.q3.value = "20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1";
+      form.q4.value = "DLROW";
+      form.q5.value = "dog, cat, lion";
+    });
+  }
+});
