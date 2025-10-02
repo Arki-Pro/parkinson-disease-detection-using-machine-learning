@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const data = await resp.json();
         const prob = (typeof data.probability==='number') ? (data.probability*100).toFixed(1) : 'N/A';
-        const label = data.prediction===1 ? `Parkinson’s likely (model positive, ${prob}%)` : `Parkinson’s unlikely (model negative, ${prob}%)`;
+        const label = data.prediction===1 ? `Neurodegeneration likely, consult Health Professional further for Dementia (model positive, ${prob}%)` : `Neurodegeneration unlikely (model negative, ${prob}%)`;
         resultBox.innerHTML = `<strong>Prediction:</strong> ${label}`;
 
         if(data.feature_status){
