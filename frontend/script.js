@@ -1,6 +1,5 @@
 const BACKEND_URL = 'https://parkinson-disease-detection-using.onrender.com/predict';
 
-
 // Smooth scroll for anchor links (keep if already present)
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
@@ -13,9 +12,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 // --- Healthy demo values: a real healthy row from dataset (paste here) ---
-// These values are typical healthy sample rows from the Kaggle dataset
-// If your deployed model uses a different model/scaler, you may need to run the Kaggle script
-// I provided earlier to extract a guaranteed healthy row from *your deployed* model.
 document.getElementById('fillDemo').addEventListener('click', () => {
   const set = (id, val) => document.getElementById(id).value = val;
   set('fo', 119.992);
@@ -108,7 +104,8 @@ document.getElementById('patientDataForm').addEventListener('submit', async (e) 
     console.error(err);
   }
 });
-// dementia-quiz.js  — drop this file in your frontend and include it before </body>
+
+// --- Dementia quiz logic ---
 document.addEventListener('DOMContentLoaded', () => {
   // IDs expected in HTML
   const FORM_ID = 'dementiaQuizForm';
@@ -125,6 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!resultBox) {
     console.error(`Dementia quiz JS: result container with id="${RESULT_ID}" not found.`);
     return;
+  }
+
+  // --- NEW FEATURE: Fill Demo Answers Button ---
+  const demoBtn = document.getElementById('fillDemoDementia');
+  if (demoBtn && form) {
+    demoBtn.addEventListener('click', () => {
+      form.q1.value = "01/10/2025";
+      form.q2.value = "Apple, Table, Penny";
+      form.q3.value = "20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1";
+      form.q4.value = "DLROW";
+      form.q5.value = "dog, cat, lion";
+    });
   }
 
   // Example questions count: adjust if your HTML has more/less
@@ -189,22 +198,6 @@ document.addEventListener('DOMContentLoaded', () => {
       form.reset();
       resultBox.innerHTML = '';
       resultBox.classList.add('hide');
-    });
-  }
-});
-document.addEventListener('DOMContentLoaded', () => {
-  // ...existing dementia quiz code...
-
-  // Demo fill button for dementia quiz
-  const demoBtn = document.getElementById('fillDemoDementia');
-  const form = document.getElementById('dementiaQuizForm');
-  if (demoBtn && form) {
-    demoBtn.addEventListener('click', () => {
-      form.q1.value = "01/10/2025"; // today's date, as demo
-      form.q2.value = "Apple, Table, Penny";
-      form.q3.value = "20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1";
-      form.q4.value = "DLROW";
-      form.q5.value = "dog, cat, lion";
     });
   }
 });
