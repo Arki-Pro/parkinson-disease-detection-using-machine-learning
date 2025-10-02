@@ -1,4 +1,6 @@
-// script.js — safe version for index.html and dementia.html
+// script.js — Safe, robust Parkinson frontend + improved dementia quiz
+// Replace your current script.js with this. Works on index.html and dementia.html.
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- Backend URL (used only if patientDataForm exists) ----------
@@ -112,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   } // end patientForm guard
 
-  // ---------- Dementia quiz logic (guarded) ----------
+  // ---------- Dementia quiz logic (robust) ----------
   const FORM_ID = 'dementiaQuizForm';
   const RESULT_ID = 'dementiaResult';
   const RESET_ID = 'dementiaReset';
@@ -122,11 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const dementiaResult = document.getElementById(RESULT_ID);
 
   if (dementiaForm && dementiaResult) {
-    // demo button fill (if present)
+    // Demo button fill (if present)
     const demoBtn = document.getElementById(DEMO_DEMENTIA_ID);
     if (demoBtn) {
       demoBtn.addEventListener('click', () => {
-        dementiaForm.q1.value = "01/10/2025";
+        dementiaForm.q1.value = formatDate(new Date()); // today's date in DD/MM/YYYY
         dementiaForm.q2.value = "Apple, Table, Penny";
         dementiaForm.q3.value = "20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1";
         dementiaForm.q4.value = "DLROW";
@@ -134,37 +136,106 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    const QUESTION_COUNT = 5;
+    // Helper: format Date object as DD/MM/YYYY
+    function formatDate(d) {
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
 
-    function computeScore(formData) {
+    // Robust parsers / checkers for each question
+    function checkQ1_date(answer) {
+      if (!answer) return false;
+      // Normalize slashes/dashes/spaces
+      const cleaned = answer.trim().replace(/[-.]/g, '/').replace(/\s+/g, '');
+      // Accept DD/MM/YYYY or D/M/YYYY
+      const parts = cleaned.split('/');
+      if (parts.length !== 3) return false;
+      const dd = parseInt(parts[0], 10), mm = parseInt(parts[1], 10), yyyy = parseInt(parts[2], 10);
+      if (Number.isNaN(dd) || Number.isNaN(mm) || Number.isNaN(yyyy)) return false;
+      // Accept if it's the same day as client (user's browser day) OR within +/-1 day (to be forgiving)
+      const inputDate = new Date(yyyy, mm - 1, dd);
+      const today = new Date();
+      const diffDays = Math.round((inputDate - new Date(today.getFullYear(), today.getMonth(), today.getDate()))/(1000*60*60*24));
+      return Math.abs(diffDays) <= 1;
+    }
+
+    function checkQ2_threeWords(answer) {
+      if (!answer) return false;
+      const want = ['apple','table','penny'];
+      const parts = answer.toLowerCase().split(',').map(s=>s.trim()).filter(Boolean);
+      // success if all required words are present (order not important)
+      return want.every(w => parts.includes(w));
+    }
+
+    function checkQ3_countBackwards(answer) {
+      if (!answer) return false;
+      // Normalize: remove spaces, accept commas or spaces
+      const cleaned = answer.replace(/\s+/g,'').replace(/,$/,'');
+      const parts = cleaned.split(',').map(s => s.trim()).filter(Boolean);
+      // If user used spaces instead of commas, split on spaces too (fallback)
+      if (parts.length < 5) {
+        const parts2 = answer.trim().split(/\s+/).map(s=>s.replace(/,$/,'').trim()).filter(Boolean);
+        if (parts2.length > parts.length) parts.splice(0, parts.length, ...parts2);
+      }
+      // Now check it's exactly numbers 20..1 in descending order (allowing some missing/typo tolerance)
+      const nums = parts.map(x => parseInt(x, 10)).filter(n => !Number.isNaN(n));
+      if (nums.length < 5) return false; // too few numbers to be valid
+      // Check descending by 1 step for first min(10, nums.length) entries
+      for (let i = 0; i < Math.min(10, nums.length); i++) {
+        if (nums[i] !== (20 - i)) return false;
+      }
+      return true;
+    }
+
+    function checkQ4_reverseWORLD(answer) {
+      if (!answer) return false;
+      const cleaned = answer.replace(/\s+/g,'').toUpperCase();
+      return cleaned === 'DLROW';
+    }
+
+    function checkQ5_threeAnimals(answer) {
+      if (!answer) return false;
+      const parts = answer.toLowerCase().split(',').map(s=>s.trim()).filter(Boolean);
+      // accept any 3 non-numeric tokens
+      const nonNumeric = parts.filter(p => !/^\d+$/.test(p));
+      return nonNumeric.length >= 3;
+    }
+
+    function computeScoreFromForm() {
       let score = 0;
-      for (let i = 1; i <= QUESTION_COUNT; i++) {
-        const key = 'q' + i;
-        if (!formData.has(key)) continue;
-        const val = formData.get(key);
-        const num = parseFloat(val);
-        if (!isNaN(num)) {
-          score += num;
-        } else {
-          if (String(val).toLowerCase().startsWith('y')) score += 1;
-          // for text responses like the demo, we can hard-score correct demo answers below if needed
-        }
+      try {
+        const a1 = dementiaForm.q1?.value ?? '';
+        const a2 = dementiaForm.q2?.value ?? '';
+        const a3 = dementiaForm.q3?.value ?? '';
+        const a4 = dementiaForm.q4?.value ?? '';
+        const a5 = dementiaForm.q5?.value ?? '';
+
+        if (checkQ1_date(a1)) score += 1;
+        if (checkQ2_threeWords(a2)) score += 1;
+        if (checkQ3_countBackwards(a3)) score += 1;
+        if (checkQ4_reverseWORLD(a4)) score += 1;
+        if (checkQ5_threeAnimals(a5)) score += 1;
+
+      } catch (err) {
+        console.error('Error computing dementia score', err);
       }
       return score;
     }
 
     function interpretScore(score) {
-      const maxScore = QUESTION_COUNT;
-      const pct = Math.round((score / maxScore) * 100);
-      if (pct >= 70) return { label: 'High risk (possible dementia indicators)', pct };
-      if (pct >= 40) return { label: 'Moderate risk — follow-up suggested', pct };
-      return { label: 'Low risk (unlikely)', pct };
+      const max = 5;
+      const pct = Math.round((score / max) * 100);
+      // NOTE: higher score = better cognitive function => lower risk
+      if (pct >= 80) return { label: 'Low risk (cognitive screening normal)', pct };
+      if (pct >= 50) return { label: 'Moderate risk — consider follow-up', pct };
+      return { label: 'High risk — clinical evaluation recommended', pct };
     }
 
     dementiaForm.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      const fd = new FormData(dementiaForm);
-      const score = computeScore(fd);
+      const score = computeScoreFromForm();
       const info = interpretScore(score);
 
       dementiaResult.innerHTML = `
