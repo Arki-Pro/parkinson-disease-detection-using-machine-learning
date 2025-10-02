@@ -263,3 +263,72 @@ document.addEventListener('DOMContentLoaded', () => {
   } // end dementia guard
 
 }); // end DOMContentLoaded
+// --- Trail Making Test ---
+const trailCanvas = document.getElementById('trailCanvas');
+const trailResult = document.getElementById('trailResult');
+if (trailCanvas) {
+  const ctx = trailCanvas.getContext('2d');
+  const points = [
+    {x:50, y:50}, {x:250, y:50}, {x:250, y:250}, {x:50, y:250},
+    {x:150, y:150}, {x:100, y:100}, {x:200, y:100}, {x:200, y:200}
+  ];
+  // draw points
+  ctx.fillStyle = 'blue';
+  points.forEach((p,i)=>{
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 15, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle='white';
+    ctx.font='12px Arial';
+    ctx.fillText(i+1,p.x-5,p.y+5);
+    ctx.fillStyle='blue';
+  });
+
+  let next = 0;
+  trailCanvas.addEventListener('click', (e)=>{
+    const rect = trailCanvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const dx = x - points[next].x;
+    const dy = y - points[next].y;
+    if (Math.sqrt(dx*dx + dy*dy) < 15) {
+      next++;
+      if (next === points.length) {
+        trailResult.textContent = 'Great! You completed the test.';
+      }
+    }
+  });
+}
+
+// --- Pattern Copy Test ---
+const patternOriginal = document.querySelectorAll('#patternOriginal .pattern-square');
+const patternUser = document.getElementById('patternUser');
+const patternResult = document.getElementById('patternResult');
+const patternReset = document.getElementById('patternReset');
+
+if(patternOriginal && patternUser) {
+  let userPattern = [];
+  patternOriginal.forEach((sq,i)=>{
+    const clone = sq.cloneNode(true);
+    clone.style.cursor='pointer';
+    clone.addEventListener('click', ()=>{
+      userPattern.push(i);
+      const userSq = document.createElement('div');
+      userSq.className='pattern-square';
+      userSq.style.width='30px';
+      userSq.style.height='30px';
+      userSq.style.background=sq.style.background;
+      patternUser.appendChild(userSq);
+      if(userPattern.length===patternOriginal.length){
+        let correct = userPattern.every((v,j)=>v===j);
+        patternResult.textContent = correct ? 'Pattern matched!' : 'Incorrect pattern.';
+      }
+    });
+    patternUser.appendChild(clone);
+  });
+  patternReset.addEventListener('click', ()=>{
+    userPattern=[];
+    patternUser.innerHTML='';
+    patternResult.textContent='';
+  });
+}
