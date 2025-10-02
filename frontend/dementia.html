@@ -1,22 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI-assisted Dementia — Demo</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
-  <style>
-    canvas { border:1px solid #ccc; display:block; margin:10px 0; }
-    .result { margin-top:10px; padding:10px; background:#f0f0f0; border-radius:5px; }
-    .hide { display:none; }
-    .stroop-button { padding:10px 20px; margin:5px; cursor:pointer; }
-  </style>
 </head>
 <body>
-  <!-- Header / Navbar -->
+  <!-- NAV -->
   <nav class="nav">
     <div class="nav-inner">
       <a href="/index.html" class="logo">Unveiling <span>Parkinson’s</span></a>
@@ -31,56 +25,75 @@
 
   <main class="section narrow" style="padding-top:48px;">
     <div class="container" data-aos="fade-up">
-      <h1>AI-assisted Dementia Screening — Educational Tests</h1>
-      <p class="muted">Interactive cognitive screening demo for educational purposes only.</p>
+      <h1>AI-assisted Dementia Screening — Educational Tools</h1>
+      <p class="muted">Quick cognitive screening demo for educational purposes only.</p>
 
-      <!-- Trail Making / Drawing -->
-      <div class="card">
-        <h2>1. Trail Making Test / Drawing</h2>
-        <canvas id="drawingCanvas" width="300" height="300"></canvas>
-        <button id="clearCanvas" class="btn btn-ghost">Clear Drawing</button>
+      <!-- ==================== Dementia Quiz ==================== -->
+      <div class="card" style="margin-top:18px; padding:20px;">
+        <button type="button" class="btn btn-secondary" id="fillDemoDementia" style="margin-bottom:12px;">
+          Fill Demo Answers
+        </button>
+
+        <form id="dementiaQuizForm" autocomplete="off">
+          <div class="form-group" style="grid-column:1/-1">
+            <label for="q1">1. What is today's date? (DD/MM/YYYY)</label>
+            <input id="q1" name="q1" type="text" placeholder="DD/MM/YYYY" required>
+          </div>
+
+          <div class="form-group">
+            <label for="q2">2. Repeat these words: Apple, Table, Penny</label>
+            <input id="q2" name="q2" type="text" placeholder="Type the three words separated by commas" required>
+          </div>
+
+          <div class="form-group">
+            <label for="q3">3. Count backwards from 20 to 1</label>
+            <input id="q3" name="q3" type="text" placeholder="20,19,...,1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="q4">4. Spell the word "WORLD" backwards</label>
+            <input id="q4" name="q4" type="text" placeholder="DLROW" required>
+          </div>
+
+          <div class="form-group">
+            <label for="q5">5. Name 3 animals</label>
+            <input id="q5" name="q5" type="text" placeholder="dog, cat, lion" required>
+          </div>
+
+          <div class="form-actions" style="grid-column:1/-1; justify-content:flex-end;">
+            <button type="submit" class="btn btn-primary">Submit Quiz</button>
+            <button type="reset" class="btn btn-ghost" id="dementiaReset">Reset</button>
+          </div>
+        </form>
+
+        <div id="dementiaResult" class="result hide" aria-live="polite" style="margin-top:14px;"></div>
       </div>
 
-      <!-- Stroop Test -->
-      <div class="card">
-        <h2>2. Stroop Test</h2>
-        <p>Click the color of the text, not the word:</p>
-        <div id="stroopWord" style="font-size:24px; font-weight:bold; margin:10px 0;"></div>
-        <div id="stroopButtons"></div>
-        <div id="stroopResult" class="result hide"></div>
+      <!-- ==================== Trail Making Test ==================== -->
+      <div class="card" style="margin-top:30px; padding:20px;">
+        <h3>Trail Making Test</h3>
+        <p>Click the numbered circles in ascending order.</p>
+        <canvas id="trailCanvas" width="300" height="300" style="border:1px solid #ccc;"></canvas>
+        <div id="trailResult" style="margin-top:10px; font-weight:bold;"></div>
       </div>
 
-      <!-- Memory Recall Test -->
-      <div class="card">
-        <h2>3. Memory Recall Test</h2>
-        <p>Remember these words:</p>
-        <div id="memoryWords" style="margin:5px 0; font-weight:bold;"></div>
-        <input type="text" id="memoryInput" placeholder="Type the words you remember, comma separated">
-        <button id="memorySubmit" class="btn btn-primary">Submit</button>
-        <div id="memoryResult" class="result hide"></div>
-      </div>
-
-      <!-- Reaction Time Test -->
-      <div class="card">
-        <h2>4. Reaction Time Test</h2>
-        <button id="startReaction" class="btn btn-primary">Start Test</button>
-        <div id="reactionTarget" style="width:50px; height:50px; background:red; display:none; margin:10px 0; cursor:pointer;"></div>
-        <div id="reactionResult" class="result hide"></div>
-      </div>
-
-      <!-- Digit Span Test -->
-      <div class="card">
-        <h2>5. Digit Span Test</h2>
-        <p>Memorize this sequence:</p>
-        <div id="digitSequence" style="font-weight:bold; margin:5px 0;"></div>
-        <input type="text" id="digitInput" placeholder="Type the digits separated by commas">
-        <button id="digitSubmit" class="btn btn-primary">Submit</button>
-        <div id="digitResult" class="result hide"></div>
+      <!-- ==================== Pattern Copy Test ==================== -->
+      <div class="card" style="margin-top:30px; padding:20px;">
+        <h3>Pattern Copy Test</h3>
+        <p>Click squares in the same sequence as the original pattern.</p>
+        <div id="patternOriginal" style="display:flex; gap:5px; margin-bottom:10px;">
+          <div class="pattern-square" style="width:30px;height:30px;background:red;"></div>
+          <div class="pattern-square" style="width:30px;height:30px;background:green;"></div>
+          <div class="pattern-square" style="width:30px;height:30px;background:blue;"></div>
+          <div class="pattern-square" style="width:30px;height:30px;background:yellow;"></div>
+        </div>
+        <div id="patternUser" style="display:flex; gap:5px; margin-bottom:10px;"></div>
+        <button id="patternReset" class="btn btn-ghost">Reset Pattern Test</button>
+        <div id="patternResult" style="margin-top:10px;font-weight:bold;"></div>
       </div>
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="footer" style="margin-top:40px;">
     <div class="container footer-inner">
       <div>© 2025 Unveiling Parkinson’s — Team NeuroMechanics</div>
@@ -91,97 +104,8 @@
     </div>
   </footer>
 
-  <script>
-    // ------------------- Drawing / Trail Making -------------------
-    const canvas = document.getElementById('drawingCanvas');
-    const ctx = canvas.getContext('2d');
-    let drawing = false;
-    canvas.addEventListener('mousedown',()=>drawing=true);
-    canvas.addEventListener('mouseup',()=>drawing=false);
-    canvas.addEventListener('mousemove',(e)=>{
-      if(drawing){
-        ctx.lineWidth=2; ctx.lineCap='round';
-        ctx.lineTo(e.offsetX,e.offsetY);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(e.offsetX,e.offsetY);
-      }
-    });
-    document.getElementById('clearCanvas').addEventListener('click',()=>ctx.clearRect(0,0,canvas.width,canvas.height));
-
-    // ------------------- Stroop Test -------------------
-    const colors=['Red','Blue','Green','Orange','Purple'];
-    const stroopWord = document.getElementById('stroopWord');
-    const stroopButtons = document.getElementById('stroopButtons');
-    const stroopResult = document.getElementById('stroopResult');
-    let correctColor='';
-    function newStroop(){
-      const word = colors[Math.floor(Math.random()*colors.length)];
-      correctColor = colors[Math.floor(Math.random()*colors.length)];
-      stroopWord.textContent = word;
-      stroopWord.style.color = correctColor.toLowerCase();
-      stroopButtons.innerHTML='';
-      colors.forEach(c=>{
-        const btn = document.createElement('button');
-        btn.textContent=c; btn.className='stroop-button';
-        btn.style.background=c.toLowerCase();
-        btn.addEventListener('click',()=>checkStroop(c));
-        stroopButtons.appendChild(btn);
-      });
-    }
-    function checkStroop(choice){
-      stroopResult.classList.remove('hide');
-      stroopResult.textContent=choice===correctColor ? 'Correct!' : 'Incorrect';
-      setTimeout(newStroop,700);
-    }
-    newStroop();
-
-    // ------------------- Memory Recall -------------------
-    const memoryWords=['Apple','Table','Penny','Dog','Cat'];
-    const memoryDisplay=document.getElementById('memoryWords');
-    const memoryInput=document.getElementById('memoryInput');
-    const memoryResult=document.getElementById('memoryResult');
-    memoryDisplay.textContent=memoryWords.join(', ');
-    document.getElementById('memorySubmit').addEventListener('click',()=>{
-      const answers = memoryInput.value.split(',').map(s=>s.trim().toLowerCase());
-      const score = memoryWords.filter(w=>answers.includes(w.toLowerCase())).length;
-      memoryResult.classList.remove('hide');
-      memoryResult.textContent=`You recalled ${score} out of ${memoryWords.length} words.`;
-    });
-
-    // ------------------- Reaction Time -------------------
-    const startBtn=document.getElementById('startReaction');
-    const target=document.getElementById('reactionTarget');
-    const reactionResult=document.getElementById('reactionResult');
-    let startTime;
-    startBtn.addEventListener('click',()=>{
-      reactionResult.classList.add('hide');
-      startBtn.disabled=true;
-      target.style.display='none';
-      const delay=Math.random()*2000+1000;
-      setTimeout(()=>{
-        target.style.display='block';
-        startTime=Date.now();
-      },delay);
-    });
-    target.addEventListener('click',()=>{
-      const rt=Date.now()-startTime;
-      reactionResult.classList.remove('hide');
-      reactionResult.textContent=`Reaction time: ${rt} ms`;
-      target.style.display='none';
-      startBtn.disabled=false;
-    });
-
-    // ------------------- Digit Span -------------------
-    const sequence=[4,7,2,9,1];
-    document.getElementById('digitSequence').textContent=sequence.join(', ');
-    document.getElementById('digitSubmit').addEventListener('click',()=>{
-      const input=document.getElementById('digitInput').value.split(',').map(n=>parseInt(n.trim()));
-      const score = sequence.filter((n,i)=>n===input[i]).length;
-      const res=document.getElementById('digitResult');
-      res.classList.remove('hide');
-      res.textContent=`Correct digits in order: ${score} out of ${sequence.length}`;
-    });
-  </script>
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>AOS.init({ duration: 700, once: true });</script>
 </body>
 </html>
