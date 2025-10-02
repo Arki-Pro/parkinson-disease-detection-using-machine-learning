@@ -107,4 +107,44 @@ document.getElementById('patientDataForm').addEventListener('submit', async (e) 
     resultBox.textContent = 'Could not connect to backend.';
     console.error(err);
   }
+document.getElementById('dementiaQuizForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const resultBox = document.getElementById('quizResult');
+  resultBox.className = 'result';
+  resultBox.textContent = '';
+
+  let score = 0;
+
+  // Q1: today’s date (basic check for orientation)
+  const today = new Date();
+  const q1 = document.getElementById('q1').value.trim();
+  const todayStr = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
+  if (q1 === todayStr) score += 1;
+
+  // Q2: repeat words
+  const q2 = document.getElementById('q2').value.toLowerCase().replace(/\s+/g,'');
+  if (q2.includes('apple') && q2.includes('table') && q2.includes('penny')) score += 1;
+
+  // Q3: count backwards 20–1
+  const q3 = document.getElementById('q3').value.replace(/\s+/g,'').split(',');
+  if (q3.length === 20 && q3[0] == 20 && q3[19] == 1) score += 1;
+
+  // Q4: WORLD backwards
+  const q4 = document.getElementById('q4').value.trim().toUpperCase();
+  if (q4 === 'DLROW') score += 1;
+
+  // Q5: 3 animals
+  const q5 = document.getElementById('q5').value.toLowerCase().split(',');
+  if (q5.filter(a => a.trim() !== '').length >= 3) score += 1;
+
+  // Result
+  let message = '';
+  if (score === 5) message = "Excellent! Cognitive performance looks normal.";
+  else if (score >= 3) message = "Moderate performance. Consider regular cognitive exercises.";
+  else message = "Low score. Educational alert: May need further cognitive assessment.";
+
+  resultBox.innerHTML = `<strong>Score: ${score}/5</strong><br>${message}`;
+  resultBox.classList.remove('hide');
+  resultBox.classList.add(score >= 3 ? 'ok' : 'bad');
+});
 });
