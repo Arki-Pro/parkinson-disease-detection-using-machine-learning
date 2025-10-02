@@ -107,6 +107,7 @@ document.getElementById('patientDataForm').addEventListener('submit', async (e) 
     resultBox.textContent = 'Could not connect to backend.';
     console.error(err);
   }
+});
 document.getElementById('dementiaQuizForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const resultBox = document.getElementById('quizResult');
@@ -146,5 +147,4 @@ document.getElementById('dementiaQuizForm').addEventListener('submit', function(
   resultBox.innerHTML = `<strong>Score: ${score}/5</strong><br>${message}`;
   resultBox.classList.remove('hide');
   resultBox.classList.add(score >= 3 ? 'ok' : 'bad');
-});
 });
