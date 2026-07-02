@@ -1,4 +1,7 @@
 # 
+
+(TEMPORARY FRONTEND CONTENT REVAMP FOR LEWY BODY DEMENTIA due to Smart India Hackathon 2025, this Project is mainly committed to Parkinsonian family only.)
+
 AI-assisted Detection of Neurodegenerative Speech and Cognitive Changes Related to Dementia
 
 Our web application collects seven acoustic voice biomarkers to predict the likelihood of neurodegenerative motor speech impairment via a trained machine learning model. In addition, it provides dementia screening through AI-assisted cognitive quizzes and behavioral assessments.
