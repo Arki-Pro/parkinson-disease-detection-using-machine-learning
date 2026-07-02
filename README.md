@@ -1,6 +1,6 @@
 # 
 
-(TEMPORARY FRONTEND CONTENT REVAMP FOR LEWY BODY DEMENTIA due to Smart India Hackathon 2025, this Project is mainly committed to Parkinsonian family only.)
+(TEMPORARY frontend content REVAMP for LEWY BODY DEMENTIA due to Smart India Hackathon 2025, this Project is mainly committed to Parkinsonian family only and shall be updated in its Parkinson's Diease original form by 2026 October for BIRAC BIG.)
 
 AI-assisted Detection of Neurodegenerative Speech and Cognitive Changes Related to Dementia
 
